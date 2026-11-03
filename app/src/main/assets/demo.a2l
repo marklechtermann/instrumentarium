@@ -1,0 +1,167 @@
+ASAP2_VERSION 1 71
+/begin PROJECT InstrumentariumDemo "Demo-ECU for Instrumentarium"
+  /begin MODULE DemoECU "Vehicle model served by xcp_sim.py"
+    /begin MOD_COMMON ""
+      BYTE_ORDER MSB_LAST
+      ALIGNMENT_BYTE 1
+    /end MOD_COMMON
+    /* XCP on Ethernet: TCP/UDP port 5555 */
+    /begin MEASUREMENT Engine.Speed "Motordrehzahl" UWORD CM_Engine_Speed 0 0 0 7000
+      ECU_ADDRESS 0x00010000
+    /end MEASUREMENT
+    /begin MEASUREMENT Engine.Torque "Motormoment" SWORD CM_Engine_Torque 0 0 -50 350
+      ECU_ADDRESS 0x00010002
+    /end MEASUREMENT
+    /begin MEASUREMENT Engine.Load "Drosselklappenstellung ist" UBYTE CM_Engine_Load 0 0 0 100
+      ECU_ADDRESS 0x00010004
+    /end MEASUREMENT
+    /begin MEASUREMENT Engine.CoolantTemp "Kuehlmitteltemperatur" UWORD CM_Engine_CoolantTemp 0 0 -40 140
+      ECU_ADDRESS 0x00010006
+    /end MEASUREMENT
+    /begin MEASUREMENT Engine.OilPressure "Oeldruck" FLOAT32_IEEE CM_IDENT_bar 0 0 0 6
+      ECU_ADDRESS 0x00010008
+    /end MEASUREMENT
+    /begin MEASUREMENT Engine.State "Motorzustand" UBYTE CM_VT_EngineState 0 0 0 4
+      ECU_ADDRESS 0x0001000C
+    /end MEASUREMENT
+    /begin MEASUREMENT Vehicle.Speed "Fahrzeuggeschwindigkeit" UWORD CM_Vehicle_Speed 0 0 0 250
+      ECU_ADDRESS 0x0001000E
+    /end MEASUREMENT
+    /begin MEASUREMENT Vehicle.Gear "Eingelegter Gang" UBYTE CM_VT_Gear 0 0 0 6
+      ECU_ADDRESS 0x00010010
+    /end MEASUREMENT
+    /begin MEASUREMENT Vehicle.AccelLong "Laengsbeschleunigung" FLOAT32_IEEE CM_IDENT_m_s2 0 0 -10 10
+      ECU_ADDRESS 0x00010014
+    /end MEASUREMENT
+    /begin MEASUREMENT Vehicle.AccelLat "Querbeschleunigung" FLOAT32_IEEE CM_IDENT_m_s2 0 0 -10 10
+      ECU_ADDRESS 0x00010018
+    /end MEASUREMENT
+    /begin MEASUREMENT Vehicle.YawRate "Gierrate" FLOAT32_IEEE CM_IDENT_deg_s 0 0 -60 60
+      ECU_ADDRESS 0x0001001C
+    /end MEASUREMENT
+    /begin MEASUREMENT Vehicle.Odometer "Wegstrecke" FLOAT32_IEEE CM_IDENT_km 0 0 0 1000
+      ECU_ADDRESS 0x00010020
+    /end MEASUREMENT
+    /begin MEASUREMENT Electrical.BatteryVoltage "Bordnetzspannung" UWORD CM_Electrical_BatteryVoltage 0 0 10 15
+      ECU_ADDRESS 0x00010024
+    /end MEASUREMENT
+    /begin MEASUREMENT Electrical.FanActive "Luefter aktiv" UBYTE CM_VT_OnOff 0 0 0 1
+      ECU_ADDRESS 0x00010026
+    /end MEASUREMENT
+    /begin MEASUREMENT Status.OverheatWarning "Uebertemperatur-Warnung" UBYTE CM_VT_OnOff 0 0 0 1
+      ECU_ADDRESS 0x00010027
+    /end MEASUREMENT
+    /begin MEASUREMENT Status.RevLimiter "Drehzahlbegrenzer aktiv" UBYTE CM_VT_OnOff 0 0 0 1
+      ECU_ADDRESS 0x00010028
+    /end MEASUREMENT
+    /begin MEASUREMENT Signals.Time "Simulationszeit" FLOAT64_IEEE CM_IDENT_s 0 0 0 1000000.0
+      ECU_ADDRESS 0x00010030
+    /end MEASUREMENT
+    /begin MEASUREMENT Signals.Sine "Sinus" FLOAT32_IEEE CM_IDENT_none 0 0 -10 10
+      ECU_ADDRESS 0x00010038
+    /end MEASUREMENT
+    /begin MEASUREMENT Signals.Square "Rechteck" FLOAT32_IEEE CM_IDENT_none 0 0 -10 10
+      ECU_ADDRESS 0x0001003C
+    /end MEASUREMENT
+    /begin MEASUREMENT Signals.Sawtooth "Saegezahn" FLOAT32_IEEE CM_IDENT_none 0 0 -10 10
+      ECU_ADDRESS 0x00010040
+    /end MEASUREMENT
+    /begin MEASUREMENT Signals.Noise "Rauschen" FLOAT32_IEEE CM_IDENT_none 0 0 -10 10
+      ECU_ADDRESS 0x00010044
+    /end MEASUREMENT
+    /begin CHARACTERISTIC Driver.Ignition "Zuendung" VALUE 0x00020000 RL_UBYTE 0 CM_VT_OnOff 0 1
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Driver.AutoDrive "Automatischer Fahrzyklus" VALUE 0x00020001 RL_UBYTE 0 CM_VT_OnOff 0 1
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Driver.ThrottleCmd "Fahrpedal" VALUE 0x00020004 RL_FLOAT32_IEEE 0 CM_IDENT_pct 0 100
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Driver.BrakeCmd "Bremspedal" VALUE 0x00020008 RL_FLOAT32_IEEE 0 CM_IDENT_pct 0 100
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Driver.SteeringAngle "Lenkradwinkel" VALUE 0x0002000C RL_SWORD 0 CM_Driver_SteeringAngle -270 270
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Calib.IdleSpeed "Leerlaufdrehzahl Soll" VALUE 0x0002000E RL_UWORD 0 CM_IDENT_rpm 600 1200
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Calib.RevLimit "Drehzahlbegrenzung" VALUE 0x00020010 RL_UWORD 0 CM_IDENT_rpm 4000 7000
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Calib.FanThreshold "Luefter-Einschaltschwelle" VALUE 0x00020012 RL_UBYTE 0 CM_Calib_FanThreshold 80 110
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Calib.FanEnable "Lueferfreigabe" VALUE 0x00020013 RL_UBYTE 0 CM_VT_OnOff 0 1
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Signals.Frequency "Frequenz Testsignale" VALUE 0x00020014 RL_FLOAT32_IEEE 0 CM_IDENT_Hz 0.05 5
+    /end CHARACTERISTIC
+    /begin CHARACTERISTIC Signals.Amplitude "Amplitude Testsignale" VALUE 0x00020018 RL_FLOAT32_IEEE 0 CM_IDENT_none 0 10
+    /end CHARACTERISTIC
+    /begin RECORD_LAYOUT RL_FLOAT32_IEEE
+      FNC_VALUES 1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end RECORD_LAYOUT
+    /begin RECORD_LAYOUT RL_SWORD
+      FNC_VALUES 1 SWORD COLUMN_DIR DIRECT
+    /end RECORD_LAYOUT
+    /begin RECORD_LAYOUT RL_UBYTE
+      FNC_VALUES 1 UBYTE COLUMN_DIR DIRECT
+    /end RECORD_LAYOUT
+    /begin RECORD_LAYOUT RL_UWORD
+      FNC_VALUES 1 UWORD COLUMN_DIR DIRECT
+    /end RECORD_LAYOUT
+    /begin COMPU_METHOD CM_Engine_Speed "" LINEAR "%.2f" "rpm"
+      COEFFS_LINEAR 0.25 0.0
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_Engine_Torque "" LINEAR "%.2f" "Nm"
+      COEFFS_LINEAR 0.1 0.0
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_Engine_Load "" LINEAR "%.2f" "%"
+      COEFFS_LINEAR 0.5 0.0
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_Engine_CoolantTemp "" LINEAR "%.2f" "degC"
+      COEFFS_LINEAR 0.01 -40.0
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_bar "" IDENTICAL "%.3f" "bar"
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_VT_EngineState "" TAB_VERB "%.0f" "-"
+      COMPU_TAB_REF VT_EngineState
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_Vehicle_Speed "" RAT_FUNC "%.2f" "km/h"
+      COEFFS 0 128.0 0 0 0 1
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_VT_Gear "" TAB_VERB "%.0f" "-"
+      COMPU_TAB_REF VT_Gear
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_m_s2 "" IDENTICAL "%.3f" "m/s^2"
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_deg_s "" IDENTICAL "%.3f" "deg/s"
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_km "" IDENTICAL "%.3f" "km"
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_Electrical_BatteryVoltage "" LINEAR "%.2f" "V"
+      COEFFS_LINEAR 0.001 0.0
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_VT_OnOff "" TAB_VERB "%.0f" "-"
+      COMPU_TAB_REF VT_OnOff
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_s "" IDENTICAL "%.3f" "s"
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_none "" IDENTICAL "%.3f" "-"
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_pct "" IDENTICAL "%.3f" "%"
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_Driver_SteeringAngle "" LINEAR "%.2f" "deg"
+      COEFFS_LINEAR 0.1 0.0
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_rpm "" IDENTICAL "%.3f" "rpm"
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_Calib_FanThreshold "" LINEAR "%.2f" "degC"
+      COEFFS_LINEAR 1.0 -40.0
+    /end COMPU_METHOD
+    /begin COMPU_METHOD CM_IDENT_Hz "" IDENTICAL "%.3f" "Hz"
+    /end COMPU_METHOD
+    /begin COMPU_VTAB VT_EngineState "" TAB_VERB 5
+      0 "Aus" 1 "Leerlauf" 2 "Last" 3 "Schub" 4 "Begrenzer"
+    /end COMPU_VTAB
+    /begin COMPU_VTAB VT_Gear "" TAB_VERB 7
+      0 "N" 1 "1" 2 "2" 3 "3" 4 "4" 5 "5" 6 "6"
+    /end COMPU_VTAB
+    /begin COMPU_VTAB VT_OnOff "" TAB_VERB 2
+      0 "Aus" 1 "Ein"
+    /end COMPU_VTAB
+  /end MODULE
+/end PROJECT
