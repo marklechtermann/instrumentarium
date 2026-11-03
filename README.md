@@ -3,7 +3,7 @@
 Android app (Kotlin, Jetpack Compose) for measurement and calibration on ECUs:
 layouts with instruments, measuring, recording (MDF4), calibration with Data Sets.
 Runs without hardware on a mock platform and talks to real devices via **XCP on Ethernet**.
-See [PLAN.md](PLAN.md) for the plan and research, and [screenshots/](screenshots/) for screenshots.
+See [PLAN.md](PLAN.md) for the plan and research.
 
 ## Features
 
@@ -83,3 +83,9 @@ app/src/main/java/de/instrumentarium/
 simulator/       xcp_sim.py + generated demo.a2l
 desktop-preview/ JVM tests, screenshots, compile check
 ```
+
+## License
+
+Copyright 2026 Mark Lechtermann
+
+Licensed under the [Apache License, Version 2.0](LICENSE).
